@@ -237,7 +237,6 @@ function decendingOrder() {
 
 
 function editCard(i) {
-    // console.log(todoList)
     document.getElementById("editTitle").value = todoList[i].title;
     document.getElementById("editDesc").value = todoList[i].desc;
     document.getElementById("editDate").value = todoList[i].date;
