@@ -1,4 +1,19 @@
 var todoList = [];
+document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll(".navbar-collapse .nav-link, .navbar-collapse button");
+    const navbarCollapse = document.querySelector(".navbar-collapse");
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        if (window.innerWidth < 992) {
+          const collapse = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (collapse) {
+            collapse.hide(); // collapse if already shown
+          }
+        }
+      });
+    });
+  });
 window.onload = function () {
     const logInUserData = JSON.parse(localStorage.getItem("logInUserData"));
     document.getElementById('uName').textContent = logInUserData.uName;
