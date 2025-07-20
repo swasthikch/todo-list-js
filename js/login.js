@@ -85,6 +85,7 @@ window.onload = function attachStudentFormListener() {
             if (data.uName && data.email && data.password && data.phone && data.address) {
                 let usersData = JSON.parse(sessionStorage.getItem("usersData"));
                 Object.assign(data, { id: usersData.length + 1 });
+                Object.assign(data, { todoList: [] });
                 usersData.push(data);
                 sessionStorage.removeItem("usersData");
                 sessionStorage.setItem("usersData", JSON.stringify(usersData));

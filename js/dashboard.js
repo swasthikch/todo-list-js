@@ -1,5 +1,10 @@
 var todoList = [];
-
+window.onload = function () {
+    const logInUserData = JSON.parse(sessionStorage.getItem("logInUserData"));
+    document.getElementById('uName').textContent = logInUserData.uName;
+    todoList = logInUserData.todoList;
+    cardRender(todoList);
+}
 function cardRender(data) {
     let todoList = data;
     const grid = document.getElementById('grid');
@@ -94,6 +99,7 @@ function createToDo(event) {
 
     } else {
         todoList.push(obj);
+        updateStoredData()
         let createToDoModal = bootstrap.Modal.getInstance(document.getElementById('createToDoModal'));
         createToDoModal.hide();
         document.getElementById("title").value = ''
@@ -104,6 +110,16 @@ function createToDo(event) {
         console.log(todoList)
         cardRender(todoList)
     }
+
+}
+
+function updateStoredData() {
+    const userData = JSON.parse(sessionStorage.getItem("usersData"));
+        const logInUserData = JSON.parse(sessionStorage.getItem("logInUserData"));
+        let userINdex = userData.findIndex(e => e.email === logInUserData.email && e.password === logInUserData.password);
+        userData[userINdex].todoList = todoList;
+        sessionStorage.removeItem("usersData");
+        sessionStorage.setItem("usersData", JSON.stringify(userData));
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -144,11 +160,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function onLikeClick(i) {
     todoList[i].like++;
+    updateStoredData();
     cardRender(todoList);
 }
 
 function onUnLikeClick(i) {
     todoList[i].unLike++;
+    updateStoredData();
     cardRender(todoList);
 }
 
@@ -203,6 +221,7 @@ function addTheComment() {
     }
     todoList[commentIndex].comments.push(comentObj);
     document.getElementById("comments").value = '';
+    updateStoredData();
     cardRender(todoList);
     let commentModal = bootstrap.Modal.getInstance(document.getElementById('commentModal'));
     commentModal.hide();
@@ -210,6 +229,7 @@ function addTheComment() {
 
 function deleteCard(i) {
     todoList.splice(i, 1);
+    updateStoredData();
     cardRender(todoList);
 }
 
@@ -274,6 +294,7 @@ function editContent() {
     todoList.splice(editIndex, 1, updated);
 
     cardRender(todoList);
+    updateStoredData();
     let editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
     editModal.hide();
 }
