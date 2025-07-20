@@ -17,15 +17,15 @@ window.onload = function attachStudentFormListener() {
             } else if (obj.password.length < 8) {
                 passwordError.innerHTML = 'please enter password with 8 char'
             } else {
-                let usersData = JSON.parse(sessionStorage.getItem("usersData"));
+                let usersData = JSON.parse(localStorage.getItem("usersData"));
                 let findUser = usersData.find(e => e.email === obj.eMail && e.password === obj.password);
                 console.log(findUser)
                 if (findUser) {
                     alert("login successful");
                     
                     e.target.reset();
-            JSON.parse(sessionStorage.getItem("logInUserData"))
-            sessionStorage.setItem("logInUserData",JSON.stringify(findUser))
+            JSON.parse(localStorage.getItem("logInUserData"))
+            localStorage.setItem("logInUserData",JSON.stringify(findUser))
                     window.location.href = "./dashboard.html";
                 } else {
                     alert("please enter valid information")
@@ -83,12 +83,12 @@ window.onload = function attachStudentFormListener() {
             }
             isMailExist();
             if (data.uName && data.email && data.password && data.phone && data.address) {
-                let usersData = JSON.parse(sessionStorage.getItem("usersData"));
+                let usersData = JSON.parse(localStorage.getItem("usersData"));
                 Object.assign(data, { id: usersData.length + 1 });
                 Object.assign(data, { todoList: [] });
                 usersData.push(data);
-                sessionStorage.removeItem("usersData");
-                sessionStorage.setItem("usersData", JSON.stringify(usersData));
+                localStorage.removeItem("usersData");
+                localStorage.setItem("usersData", JSON.stringify(usersData));
                 e.target.reset();
                 let abc = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
                 abc.hide();
@@ -107,7 +107,7 @@ function openRegisterPopup() {
 function isMailExist() {
     const reeMail = document.getElementById("reeMail").value
     console.log(reeMail)
-    let usersData = JSON.parse(sessionStorage.getItem("usersData"));
+    let usersData = JSON.parse(localStorage.getItem("usersData"));
     let findUser = usersData.find(e => e.email === reeMail);
     console.log(findUser)
     if (findUser) {

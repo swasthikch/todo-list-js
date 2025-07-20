@@ -1,6 +1,6 @@
 var todoList = [];
 window.onload = function () {
-    const logInUserData = JSON.parse(sessionStorage.getItem("logInUserData"));
+    const logInUserData = JSON.parse(localStorage.getItem("logInUserData"));
     document.getElementById('uName').textContent = logInUserData.uName;
     todoList = logInUserData.todoList;
     cardRender(todoList);
@@ -114,12 +114,12 @@ function createToDo(event) {
 }
 
 function updateStoredData() {
-    const userData = JSON.parse(sessionStorage.getItem("usersData"));
-        const logInUserData = JSON.parse(sessionStorage.getItem("logInUserData"));
+    const userData = JSON.parse(localStorage.getItem("usersData"));
+        const logInUserData = JSON.parse(localStorage.getItem("logInUserData"));
         let userINdex = userData.findIndex(e => e.email === logInUserData.email && e.password === logInUserData.password);
         userData[userINdex].todoList = todoList;
-        sessionStorage.removeItem("usersData");
-        sessionStorage.setItem("usersData", JSON.stringify(userData));
+        localStorage.removeItem("usersData");
+        localStorage.setItem("usersData", JSON.stringify(userData));
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -171,7 +171,7 @@ function onUnLikeClick(i) {
 }
 
 function logOutPage() {
-    sessionStorage.removeItem("logInUserData");
+    localStorage.removeItem("logInUserData");
     window.location.href = "login.html";
 }
 
@@ -203,7 +203,7 @@ function commentsPopup(i) {
 
 function addTheComment() {
     const comments = document.getElementById("comments").value;
-    const logInUserData = JSON.parse(sessionStorage.getItem("logInUserData"));
+    const logInUserData = JSON.parse(localStorage.getItem("logInUserData"));
     const timestamp = new Date().getTime(); // current timestamp in milliseconds
     const date = new Date(timestamp);
     let hours = date.getHours();
